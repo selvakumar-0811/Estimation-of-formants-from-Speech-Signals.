@@ -30,3 +30,19 @@ a=lpc(x,ncoeff);
 [h,f]=freqz(1,a,512,Fs);
 subplot(2,1,2);
 plot(f,20*log10(abs(h)+eps));
+legend('LP Filter');
+xlabel('Frequency (Hz)');
+ylabel('Gain (dB)');
+r=roots(a); % find roots of polynomial a
+
+r=r(imag(r)>0.01); % only look for roots >0Hz up to fs/2
+
+ffreq=sort(atan2(imag(r),real(r))*Fs/(2*pi));
+
+% convert to Hz and sort
+
+for i=1:length(ffreq)
+
+ fprintf('Formant %d Frequency %.1f\n',i,ffreq(i));
+
+end
